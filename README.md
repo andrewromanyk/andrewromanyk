@@ -1,3 +1,3 @@
 <div align="center">
-  ![main_image](./image.svg)
+  <img src="./image.svg" alt="main_image">
 </div>
