@@ -116,7 +116,7 @@ def main():
     with open("image.template.svg", "r") as file:
         template = file.read()
         
-    final_svg = template.format(dynamic_bars=dynamic_svg_content)
+    final_svg = template.replace("{dynamic_bars}", dynamic_svg_content)
     
     with open("image.svg", "w") as file:
         file.write(final_svg)
