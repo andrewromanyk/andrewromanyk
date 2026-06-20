@@ -3,9 +3,8 @@ import requests
 
 URL = "https://api.github.com/graphql"
 TOKEN = os.getenv("GH_TOKEN")
-MAX_LANGUAGES = 5 # Adjust to fit your vertical visual constraints
+MAX_LANGUAGES = 5 
 
-# Standard GitHub Linguist Colors
 LANGUAGE_COLORS = {
     "Rust": "#dea584",
     "C++": "#f34b7d",
@@ -28,7 +27,6 @@ LANGUAGE_COLORS = {
 }
 FALLBACK_COLOR = "#8b949e"
 
-# Updated Query: Fetches only the Primary Language of each repository
 QUERY = """
 {
   viewer {
@@ -53,7 +51,6 @@ def fetch_project_stats():
     
     stats = {}
     for repo in repos:
-        # Repositories without code (e.g., just a README) return null for primaryLanguage
         if repo.get("primaryLanguage") and repo["primaryLanguage"]:
             lang = repo["primaryLanguage"]["name"]
             stats[lang] = stats.get(lang, 0) + 1
@@ -64,7 +61,6 @@ def generate_svg_elements(stats):
     if not stats:
         return ""
 
-    # Sort all languages by project count descending
     all_langs = sorted(stats.items(), key=lambda x: x[1], reverse=True)
     global_total_projects = sum(count for _, count in all_langs)
     
@@ -73,11 +69,8 @@ def generate_svg_elements(stats):
 
     processed_langs = []
     
-    # Route logic based on whether total languages exceed the visual limit
     if len(all_langs) > MAX_LANGUAGES:
-        # Extract Top N-1 languages
         top_langs = all_langs[:MAX_LANGUAGES - 1]
-        # Aggregate the remaining project counts
         others_count = sum(count for _, count in all_langs[MAX_LANGUAGES - 1:])
         
         processed_langs.extend(top_langs)
@@ -97,21 +90,17 @@ def generate_svg_elements(stats):
         percentage = (count / global_total_projects) * 100
         color = LANGUAGE_COLORS.get(lang, FALLBACK_COLOR)
         
-        # Calculate proportional height. Absorb remaining pixels into the last element.
         if i == num_langs - 1:
             segment_height = total_height - current_y
         else:
             segment_height = int((percentage / 100) * usable_height)
 
-        # SVG Rect
         rect = f'<rect x="0" y="{current_y}" width="8" height="{segment_height}" rx="4" fill="{color}" />'
         
-        # Math for precise text centering
         midpoint_y = current_y + (segment_height / 2)
         text_name_y = midpoint_y - 10
         text_perc_y = midpoint_y + 10
 
-        # SVG Text
         text_name = f'<text x="20" y="{text_name_y}" fill="{color}" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">{lang}</text>'
         text_perc = f'<text x="20" y="{text_perc_y}" fill="{color}" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">{percentage:.1f}%</text>'
 
