@@ -90,19 +90,40 @@ def generate_svg_elements(stats):
         percentage = (count / global_total_projects) * 100
         color = LANGUAGE_COLORS.get(lang, FALLBACK_COLOR)
         
+        # Calculate proportional height
         if i == num_langs - 1:
             segment_height = total_height - current_y
         else:
             segment_height = int((percentage / 100) * usable_height)
 
-        rect = f'<rect x="0" y="{current_y}" width="8" height="{segment_height}" rx="4" fill="{color}" />'
-        
+        # Base geometry
         midpoint_y = current_y + (segment_height / 2)
         text_name_y = midpoint_y - 10
         text_perc_y = midpoint_y + 10
 
-        text_name = f'<text x="20" y="{text_name_y}" fill="{color}" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">{lang}</text>'
-        text_perc = f'<text x="20" y="{text_perc_y}" fill="{color}" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">{percentage:.1f}%</text>'
+        # Animation timing: Cascades down the list
+        bar_delay = i * 0.15
+        text_delay = bar_delay + 0.3
+
+        # 1. Bar Animation (Grows from center)
+        rect = f'''<rect x="0" y="{midpoint_y}" width="8" height="0" rx="4" fill="{color}">
+      <animate attributeName="height" from="0" to="{segment_height}" dur="0.6s" begin="{bar_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="y" from="{midpoint_y}" to="{current_y}" dur="0.6s" begin="{bar_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+    </rect>'''
+
+        # 2. Text Name Animation (Slides right and fades in)
+        text_name = f'''<text x="4" y="{text_name_y}" fill="{color}" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle" opacity="0">
+      {lang}
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="{text_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="{text_delay}s" fill="freeze" />
+    </text>'''
+        
+        # 3. Text Percentage Animation (Slides right and fades in)
+        text_perc = f'''<text x="4" y="{text_perc_y}" fill="{color}" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      {percentage:.1f}%
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="{text_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="{text_delay}s" fill="freeze" />
+    </text>'''
 
         svg_elements.extend([rect, text_name, text_perc])
         current_y += segment_height + gap_size
