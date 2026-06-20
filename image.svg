@@ -91,20 +91,75 @@
   </g>
 
   <g transform="translate(770, 50)">
-    <rect x="0" y="0" width="8" height="188" rx="4" fill="#b07219" />
-    <text x="20" y="84.0" fill="#b07219" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">Java</text>
-    <text x="20" y="104.0" fill="#b07219" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">38.9%</text>
-    <rect x="0" y="192" width="8" height="107" rx="4" fill="#3572A5" />
-    <text x="20" y="235.5" fill="#3572A5" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">Python</text>
-    <text x="20" y="255.5" fill="#3572A5" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">22.2%</text>
-    <rect x="0" y="303" width="8" height="80" rx="4" fill="#f34b7d" />
-    <text x="20" y="333.0" fill="#f34b7d" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">C++</text>
-    <text x="20" y="353.0" fill="#f34b7d" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">16.7%</text>
-    <rect x="0" y="387" width="8" height="80" rx="4" fill="#dea584" />
-    <text x="20" y="417.0" fill="#dea584" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">Rust</text>
-    <text x="20" y="437.0" fill="#dea584" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">16.7%</text>
-    <rect x="0" y="471" width="8" height="29" rx="4" fill="#74283c" />
-    <text x="20" y="475.5" fill="#74283c" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle">Prolog</text>
-    <text x="20" y="495.5" fill="#74283c" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle">5.6%</text>
+    <rect x="0" y="94.0" width="8" height="0" rx="4" fill="#b07219">
+      <animate attributeName="height" from="0" to="188" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="y" from="94.0" to="0" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+    </rect>
+    <text x="4" y="84.0" fill="#b07219" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle" opacity="0">
+      Java
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.3s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze" />
+    </text>
+    <text x="4" y="104.0" fill="#b07219" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      38.9%
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.3s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze" />
+    </text>
+    <rect x="0" y="245.5" width="8" height="0" rx="4" fill="#3572A5">
+      <animate attributeName="height" from="0" to="107" dur="0.6s" begin="0.15s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="y" from="245.5" to="192" dur="0.6s" begin="0.15s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+    </rect>
+    <text x="4" y="235.5" fill="#3572A5" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle" opacity="0">
+      Python
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.44999999999999996s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.44999999999999996s" fill="freeze" />
+    </text>
+    <text x="4" y="255.5" fill="#3572A5" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      22.2%
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.44999999999999996s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.44999999999999996s" fill="freeze" />
+    </text>
+    <rect x="0" y="343.0" width="8" height="0" rx="4" fill="#f34b7d">
+      <animate attributeName="height" from="0" to="80" dur="0.6s" begin="0.3s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="y" from="343.0" to="303" dur="0.6s" begin="0.3s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+    </rect>
+    <text x="4" y="333.0" fill="#f34b7d" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle" opacity="0">
+      C++
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.6s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze" />
+    </text>
+    <text x="4" y="353.0" fill="#f34b7d" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      16.7%
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.6s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze" />
+    </text>
+    <rect x="0" y="427.0" width="8" height="0" rx="4" fill="#dea584">
+      <animate attributeName="height" from="0" to="80" dur="0.6s" begin="0.44999999999999996s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="y" from="427.0" to="387" dur="0.6s" begin="0.44999999999999996s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+    </rect>
+    <text x="4" y="417.0" fill="#dea584" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle" opacity="0">
+      Rust
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.75s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.75s" fill="freeze" />
+    </text>
+    <text x="4" y="437.0" fill="#dea584" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      16.7%
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.75s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.75s" fill="freeze" />
+    </text>
+    <rect x="0" y="485.5" width="8" height="0" rx="4" fill="#74283c">
+      <animate attributeName="height" from="0" to="29" dur="0.6s" begin="0.6s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="y" from="485.5" to="471" dur="0.6s" begin="0.6s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+    </rect>
+    <text x="4" y="475.5" fill="#74283c" font-family="sans-serif" font-size="16" font-weight="bold" dominant-baseline="middle" opacity="0">
+      Prolog
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.8999999999999999s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8999999999999999s" fill="freeze" />
+    </text>
+    <text x="4" y="495.5" fill="#74283c" font-family="sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      5.6%
+      <animate attributeName="x" from="4" to="20" dur="0.5s" begin="0.8999999999999999s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8999999999999999s" fill="freeze" />
+    </text>
   </g>
 </svg>
