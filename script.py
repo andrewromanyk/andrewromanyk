@@ -19,12 +19,11 @@ LANGUAGE_COLORS = {
 }
 FALLBACK_COLOR = "#8b949e"
 
-# --- Panel Dimensions & Layout ---
-PANEL_W_LEFT = 464  
-PANEL_W_RIGHT = 120 
-PANEL_PAD_X = 35
+# --- Layout Grid Definitions ---
+CANVAS_WIDTH = 800
+CANVAS_PAD = 5
 PANEL_GAP = 15
-CANVAS_PAD = 5 # Padding to prevent the 3px stroke from clipping at the SVG bounds
+ROW2_PANEL_W = (CANVAS_WIDTH - PANEL_GAP) // 2
 
 QUERY = """
 query($cursor: String) {
@@ -45,6 +44,11 @@ query($cursor: String) {
 """
 
 def fetch_project_stats():
+    """Fetches and aggregates language statistics from GitHub."""
+    if not TOKEN: 
+        print("[ERROR] GH_TOKEN environment variable is not set.")
+        return {}
+        
     headers = {"Authorization": f"Bearer {TOKEN}"}
     stats = {}
     has_next_page = True
@@ -53,9 +57,17 @@ def fetch_project_stats():
     while has_next_page:
         variables = {"cursor": cursor}
         response = requests.post(URL, json={"query": QUERY, "variables": variables}, headers=headers)
-        response.raise_for_status()
         
+        if response.status_code != 200:
+            print(f"[ERROR] GitHub API returned status {response.status_code}")
+            return stats
+            
         data = response.json()
+        
+        if "errors" in data:
+            print("[ERROR] GraphQL execution failed.")
+            return stats
+            
         repo_data = data["data"]["viewer"]["repositories"]
         
         for repo in repo_data["nodes"]:
@@ -71,41 +83,53 @@ def fetch_project_stats():
 def generate_panel_bg(w, h):
     return f'    <rect width="{w}" height="{h}" rx="15" ry="15" fill="#171717" stroke="#3ED9C9" stroke-width="3" class="animated-border"/>'
 
-def build_profile_panel(data, x, y):
+def build_profile_panel(data, x, y, panel_w):
     title = data["title"]
     
-    # Wrap text to ~48 characters to fit the scaled 464px width safely
     raw_desc = " ".join(data["description"])
-    wrapped_desc = textwrap.wrap(raw_desc, width=48)
+    wrapped_desc = textwrap.wrap(raw_desc, width=95)
     
     height = 80 + (len(wrapped_desc) * 26) + 10
     
     svg = [f'  <g transform="translate({x}, {y})">']
-    svg.append(generate_panel_bg(PANEL_W_LEFT, height))
-    svg.append(f'    <text x="{PANEL_PAD_X}" y="40" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="22" font-weight="bold">{title}</text>')
+    svg.append(generate_panel_bg(panel_w, height))
+    svg.append(f'    <text x="35" y="40" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="22" font-weight="bold">{title}</text>')
     
-    svg.append(f'    <text x="{PANEL_PAD_X}" y="80" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="16">')
+    svg.append(f'    <text x="35" y="80" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="16">')
     for i, line in enumerate(wrapped_desc):
         dy = "0" if i == 0 else "26"
-        svg.append(f'      <tspan x="{PANEL_PAD_X}" dy="{dy}">{line}</tspan>')
+        svg.append(f'      <tspan x="35" dy="{dy}">{line}</tspan>')
     svg.append('    </text>')
     svg.append('  </g>')
     
     return "\n".join(svg), height
 
-def build_skills_panel(data, x, y):
+def calc_skills_panel_height(items, panel_w):
+    """Pre-computes the required height for a skill panel based on wrapping logic."""
+    current_x = 35
+    current_y = 70
+    
+    for item in items:
+        item_w = item.get("width", 80)
+        if current_x + item_w > panel_w - 35:
+            current_x = 35
+            current_y += 45
+        current_x += item_w + 15
+        
+    return current_y + 30 + 25
+
+def build_skills_panel(data, x, y, panel_w, fixed_height):
     title = data["title"]
     items = data["items"]
     
-    current_x = PANEL_PAD_X
+    current_x = 35
     current_y = 70
     elements = []
     
     for item in items:
         item_w = item.get("width", 80)
-        # Wrap logic bound to new 464px width
-        if current_x + item_w > PANEL_W_LEFT - PANEL_PAD_X:
-            current_x = PANEL_PAD_X
+        if current_x + item_w > panel_w - 35:
+            current_x = 35
             current_y += 45
             
         elements.append(f'''    <g transform="translate({current_x}, {current_y})">
@@ -114,101 +138,112 @@ def build_skills_panel(data, x, y):
     </g>''')
         current_x += item_w + 15
         
-    height = current_y + 30 + 25 
-    
     svg = [f'  <g transform="translate({x}, {y})">']
-    svg.append(generate_panel_bg(PANEL_W_LEFT, height))
-    svg.append(f'    <text x="{PANEL_PAD_X}" y="40" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="22" font-weight="bold">{title}</text>')
+    svg.append(generate_panel_bg(panel_w, fixed_height))
+    svg.append(f'    <text x="35" y="40" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="22" font-weight="bold">{title}</text>')
     svg.extend(elements)
     svg.append('  </g>')
     
-    return "\n".join(svg), height
+    return "\n".join(svg)
 
-def build_dynamic_bars_panel(stats, x, y, panel_height):
+def build_horizontal_percentages(stats, x, y, panel_w):
+    """Generates a proportional, stacked horizontal bar graph."""
+    height = 140
     svg = [f'  <g transform="translate({x}, {y})">']
-    svg.append(generate_panel_bg(PANEL_W_RIGHT, panel_height))
+    svg.append(generate_panel_bg(panel_w, height))
 
     if not stats:
         svg.append('  </g>')
-        return "\n".join(svg)
+        return "\n".join(svg), height
 
-    all_langs = sorted(stats.items(), key=lambda x: x[1], reverse=True)
+    all_langs = sorted(stats.items(), key=lambda k: k[1], reverse=True)
     global_total = sum(count for _, count in all_langs)
+    
+    if global_total == 0:
+        svg.append('  </g>')
+        return "\n".join(svg), height
+
     processed_langs = all_langs[:MAX_LANGUAGES-1] + [("Others", sum(c for _, c in all_langs[MAX_LANGUAGES-1:]))] if len(all_langs) > MAX_LANGUAGES else all_langs
 
-    total_bar_height = panel_height - 80 
+    # Horizontal stacked logic
+    bar_area_padding = 40
+    total_bar_width = panel_w - (bar_area_padding * 2)
     gap_size = 4
     num_langs = len(processed_langs)
-    usable_height = total_bar_height - (gap_size * (num_langs - 1))
+    usable_width = total_bar_width - (gap_size * (num_langs - 1))
 
-    # Inner group shifted for the bars layout inside the 120px panel
-    svg.append('    <g transform="translate(15, 40)">')
+    svg.append(f'    <g transform="translate({bar_area_padding}, 40)">')
     
-    current_y = 0
+    current_x = 0
     for i, (lang, count) in enumerate(processed_langs):
         percentage = (count / global_total) * 100
         color = LANGUAGE_COLORS.get(lang, FALLBACK_COLOR)
         
-        segment_height = total_bar_height - current_y if i == num_langs - 1 else int((percentage / 100) * usable_height)
-        midpoint_y = current_y + (segment_height / 2)
-        bar_delay = i * 0.15
-        text_delay = bar_delay + 0.3
+        # Calculate proportional width. The last segment absorbs rounding discrepancies.
+        segment_width = total_bar_width - current_x if i == num_langs - 1 else int((percentage / 100) * usable_width)
+        midpoint_x = current_x + (segment_width / 2)
+        
+        anim_delay = i * 0.15
+        text_delay = anim_delay + 0.3
 
-        svg.append(f'''      <rect x="0" y="{midpoint_y}" width="8" height="0" rx="4" fill="{color}">
-        <animate attributeName="height" from="0" to="{segment_height}" dur="0.6s" begin="{bar_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
-        <animate attributeName="y" from="{midpoint_y}" to="{current_y}" dur="0.6s" begin="{bar_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        # Center-expanding animations correctly bounded to the horizontal axis
+        svg.append(f'''      <rect x="{midpoint_x}" y="0" width="0" height="12" rx="6" fill="{color}">
+        <animate attributeName="width" from="0" to="{segment_width}" dur="0.6s" begin="{anim_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="{midpoint_x}" to="{current_x}" dur="0.6s" begin="{anim_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
       </rect>
-      <text x="16" y="{midpoint_y - 10}" fill="{color}" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" dominant-baseline="middle" opacity="0">
+      <text x="{midpoint_x}" y="35" fill="{color}" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
         {lang}
-        <animate attributeName="x" from="4" to="16" dur="0.5s" begin="{text_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="{text_delay}s" fill="freeze" />
       </text>
-      <text x="16" y="{midpoint_y + 10}" fill="{color}" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" dominant-baseline="middle" opacity="0">
+      <text x="{midpoint_x}" y="55" fill="{color}" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
         {percentage:.1f}%
-        <animate attributeName="x" from="4" to="16" dur="0.5s" begin="{text_delay}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="{text_delay}s" fill="freeze" />
       </text>''')
-        current_y += segment_height + gap_size
+        
+        current_x += segment_width + gap_size
         
     svg.append('    </g>')
     svg.append('  </g>')
 
-    return "\n".join(svg)
+    return "\n".join(svg), height
 
 def main():
     with open(CONFIG_PATH, "r") as f:
         config = json.load(f)
         
     project_stats = fetch_project_stats()
-    
     components = []
     
-    # 1. Calculate and build left column (y offsets increment cumulatively)
     curr_y = CANVAS_PAD
     
-    me_svg, me_h = build_profile_panel(config["profile"], CANVAS_PAD, curr_y)
+    # Row 1 (Profile Container)
+    me_svg, me_h = build_profile_panel(config["profile"], CANVAS_PAD, curr_y, CANVAS_WIDTH)
     components.append(me_svg)
     curr_y += me_h + PANEL_GAP
     
-    lang_svg, lang_h = build_skills_panel(config["skill_columns"][0], CANVAS_PAD, curr_y)
+    # Row 2 (Skills Grid)
+    lang_items = config["skill_columns"][0]["items"]
+    tech_items = config["skill_columns"][1]["items"]
+    
+    lang_req_h = calc_skills_panel_height(lang_items, ROW2_PANEL_W)
+    tech_req_h = calc_skills_panel_height(tech_items, ROW2_PANEL_W)
+    row2_target_h = max(lang_req_h, tech_req_h)
+    
+    lang_svg = build_skills_panel(config["skill_columns"][0], CANVAS_PAD, curr_y, ROW2_PANEL_W, row2_target_h)
+    tech_svg = build_skills_panel(config["skill_columns"][1], CANVAS_PAD + ROW2_PANEL_W + PANEL_GAP, curr_y, ROW2_PANEL_W, row2_target_h)
+    
     components.append(lang_svg)
-    curr_y += lang_h + PANEL_GAP
-    
-    tech_svg, tech_h = build_skills_panel(config["skill_columns"][1], CANVAS_PAD, curr_y)
     components.append(tech_svg)
+    curr_y += row2_target_h + PANEL_GAP
     
-    # 2. Derive target height for right column and full SVG bounds
-    # curr_y currently sits at the top of the tech panel. Add tech_h to get total left bounds.
-    total_left_height = (curr_y + tech_h) - CANVAS_PAD
-    
-    # 3. Build right column horizontally offset
-    right_x = CANVAS_PAD + PANEL_W_LEFT + PANEL_GAP
-    perc_svg = build_dynamic_bars_panel(project_stats, right_x, CANVAS_PAD, total_left_height)
+    # Row 3 (Statistics Container)
+    perc_svg, perc_h = build_horizontal_percentages(project_stats, CANVAS_PAD, curr_y, CANVAS_WIDTH)
     components.append(perc_svg)
+    curr_y += perc_h + CANVAS_PAD
 
-    # Calculate final canvas dimensions
-    total_width = right_x + PANEL_W_RIGHT + CANVAS_PAD
-    total_height = CANVAS_PAD + total_left_height + CANVAS_PAD
+    # Canvas Compilation
+    total_width = CANVAS_WIDTH + (CANVAS_PAD * 2)
+    total_height = curr_y
 
     final_svg = f'''<svg width="{total_width}" height="{total_height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
