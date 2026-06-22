@@ -1,0 +1,42 @@
+<svg width="474" height="180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="maven-gradle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C71A36" /> 
+      <stop offset="100%" stop-color="#1DC9B7" /> 
+    </linearGradient>
+  </defs>
+  <style>
+    .animated-border { stroke-dasharray: 20, 10; animation: dash-flow 2s linear infinite; }
+    @keyframes dash-flow { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
+  </style>
+  <rect x="5" y="5" width="464" height="170" rx="15" ry="15" fill="#171717" stroke="#3ED9C9" stroke-width="3" class="animated-border"/>
+  <text x="40" y="45" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="22" font-weight="bold">Languages</text>
+  <g transform="translate(40, 75)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#f34b7d" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">C++</text>
+  </g>
+  <g transform="translate(135, 75)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#dea584" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">Rust</text>
+  </g>
+  <g transform="translate(230, 75)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#b07219" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">Java</text>
+  </g>
+  <g transform="translate(325, 75)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#A97BFF" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">Kotlin</text>
+  </g>
+  <g transform="translate(40, 120)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#3572A5" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">Python</text>
+  </g>
+  <g transform="translate(135, 120)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#5e5086" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">Haskell</text>
+  </g>
+  <g transform="translate(230, 120)">
+    <rect width="80" height="30" rx="15" fill="#1E1E1E" stroke="#74283c" stroke-width="2"/>
+    <text x="40.0" y="16" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">Prolog</text>
+  </g>
+</svg>

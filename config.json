@@ -1,0 +1,35 @@
+{
+  "profile": {
+    "title": "Me",
+    "description": [
+      "Systems programmer and backend engineer. Focused on desktop-oriented",
+      "architecture and hardware I/O. Experienced in optimizing large-scale",
+      "neural networks to ONNX format for NPU execution, alongside building",
+      "robust microservice infrastructures."
+    ]
+  },
+  "skill_columns": [
+    {
+      "title": "Languages",
+      "items": [
+        { "name": "C++", "color": "#f34b7d" },
+        { "name": "Rust", "color": "#dea584" },
+        { "name": "Java", "color": "#b07219" },
+        { "name": "Kotlin", "color": "#A97BFF" },
+        { "name": "Python", "color": "#3572A5" },
+        { "name": "Haskell", "color": "#5e5086" },
+        { "name": "Prolog", "color": "#74283c" }
+      ]
+    },
+    {
+      "title": "Technologies",
+      "items": [
+        { "name": "CMake", "color": "#064F8C" },
+        { "name": "Qt", "color": "#41CD52" },
+        { "name": "Spring", "color": "#6DB33F" },
+        { "name": "Maven/Gradle", "color": "url(#maven-gradle-grad)", "width": 115 },
+        { "name": "Linux", "color": "#FCC624" }
+      ]
+    }
+  ]
+}
