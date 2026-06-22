@@ -21,7 +21,7 @@ FALLBACK_COLOR = "#8b949e"
 
 # --- Layout Grid Definitions ---
 CANVAS_WIDTH = 800
-CANVAS_PAD = 5
+CANVAS_PAD = 25
 PANEL_GAP = 15
 ROW2_PANEL_W = (CANVAS_WIDTH - PANEL_GAP) // 2
 
@@ -81,7 +81,7 @@ def fetch_project_stats():
     return stats
 
 def generate_panel_bg(w, h):
-    return f'    <rect width="{w}" height="{h}" rx="15" ry="15" fill="#171717" stroke="#3ED9C9" stroke-width="3" class="animated-border"/>'
+    return f'    <rect width="{w}" height="{h}" rx="15" ry="15" fill="#171717" stroke="#3ED9C9" stroke-width="3" filter="url(#soft-shadow)" class="animated-border"/>'
 
 def build_profile_panel(data, x, y, panel_w):
     title = data["title"]
@@ -247,6 +247,10 @@ def main():
 
     final_svg = f'''<svg width="{total_width}" height="{total_height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
     <linearGradient id="maven-gradle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#C71A36" /> 
       <stop offset="100%" stop-color="#1DC9B7" /> 
