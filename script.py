@@ -7,7 +7,7 @@ import textwrap
 URL = "https://api.github.com/graphql"
 TOKEN = os.getenv("GH_TOKEN")
 CONFIG_PATH = "config.json"
-MAX_LANGUAGES = 5 
+MAX_LANGUAGES = 6
 
 LANGUAGE_COLORS = {
     "Rust": "#dea584", "C++": "#f34b7d", "C": "#555555",
@@ -15,7 +15,8 @@ LANGUAGE_COLORS = {
     "Haskell": "#5e5086", "Prolog": "#74283c", "JavaScript": "#f1e05a",
     "TypeScript": "#3178c6", "Go": "#00ADD8", "Shell": "#89e051",
     "HTML": "#e34c26", "CSS": "#563d7c", "Ruby": "#701516",
-    "C#": "#178600", "PHP": "#4F5D95", "Swift": "#F05138"
+    "C#": "#178600", "PHP": "#4F5D95", "Swift": "#F05138",
+    "Elixir": "#6e4a7e"
 }
 FALLBACK_COLOR = "#8b949e"
 
@@ -156,7 +157,7 @@ def build_horizontal_percentages(stats, x, y, panel_w):
         svg.append('  </g>')
         return "\n".join(svg), height
 
-    all_langs = sorted(stats.items(), key=lambda k: k[1], reverse=True)
+    all_langs = sorted(stats.items(), key=lambda k: (-k[1], k[0]))
     global_total = sum(count for _, count in all_langs)
     
     if global_total == 0:
