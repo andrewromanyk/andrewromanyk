@@ -17,6 +17,7 @@
         { "name": "Java", "color": "#b07219" },
         { "name": "Kotlin", "color": "#A97BFF" },
         { "name": "Python", "color": "#3572A5" },
+        { "name": "Elixir", "color": "#6e4a7e" },
         { "name": "Haskell", "color": "#5e5086" },
         { "name": "Prolog", "color": "#74283c" }
       ]
