@@ -218,20 +218,22 @@ def main():
     curr_y = CANVAS_PAD
     
     # Row 1 (Profile Container)
-    me_svg, me_h = build_profile_panel(config["profile"], CANVAS_PAD, curr_y, CANVAS_WIDTH)
-    components.append(me_svg)
-    curr_y += me_h + PANEL_GAP
+    # me_svg, me_h = build_profile_panel(config["profile"], CANVAS_PAD, curr_y, CANVAS_WIDTH)
+    # components.append(me_svg)
+    # curr_y += me_h + PANEL_GAP
     
     # Row 2 (Skills Grid)
     lang_items = config["skill_columns"][0]["items"]
     tech_items = config["skill_columns"][1]["items"]
     
-    lang_req_h = calc_skills_panel_height(lang_items, ROW2_PANEL_W)
-    tech_req_h = calc_skills_panel_height(tech_items, ROW2_PANEL_W)
+    LANG_TECHS_DIFF = 50
+
+    lang_req_h = calc_skills_panel_height(lang_items, ROW2_PANEL_W + LANG_TECHS_DIFF)
+    tech_req_h = calc_skills_panel_height(tech_items, ROW2_PANEL_W - LANG_TECHS_DIFF)
     row2_target_h = max(lang_req_h, tech_req_h)
-    
-    lang_svg = build_skills_panel(config["skill_columns"][0], CANVAS_PAD, curr_y, ROW2_PANEL_W, row2_target_h)
-    tech_svg = build_skills_panel(config["skill_columns"][1], CANVAS_PAD + ROW2_PANEL_W + PANEL_GAP, curr_y, ROW2_PANEL_W, row2_target_h)
+
+    lang_svg = build_skills_panel(config["skill_columns"][0], CANVAS_PAD, curr_y, ROW2_PANEL_W + LANG_TECHS_DIFF, row2_target_h)
+    tech_svg = build_skills_panel(config["skill_columns"][1], CANVAS_PAD + ROW2_PANEL_W + PANEL_GAP + LANG_TECHS_DIFF, curr_y, ROW2_PANEL_W - LANG_TECHS_DIFF, row2_target_h)
     
     components.append(lang_svg)
     components.append(tech_svg)
