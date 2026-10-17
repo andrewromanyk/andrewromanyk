@@ -3,14 +3,14 @@ name: Update Language Stats SVG
 on:
   schedule:
     - cron: '0 0 * * 0'
-  workflow_dispatch: # Enables a manual trigger button in the GitHub UI
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -26,13 +26,19 @@ jobs:
       - name: Generate Dynamic SVG
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ github.repository_owner }}
         run: python script.py
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
           git add image.svg
-          # Abort the commit if the SVG generated is identical to the current one
-          git diff --quiet && git diff --staged --quiet || git commit -m "chore: auto-update language stats"
-          git push
+
+          if git diff --staged --quiet; then
+            echo "No changes to image.svg; skipping commit."
+          else
+            git commit -m "chore: auto-update language stats"
+            git push
+          fi
