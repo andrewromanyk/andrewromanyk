@@ -5,7 +5,7 @@ import textwrap
 
 # --- Configuration & Constants ---
 URL = "https://api.github.com/graphql"
-TOKEN = os.getenv("GH_TOKEN")
+TOKEN = os.getenv("GITHUB_TOKEN")
 CONFIG_PATH = "config.json"
 MAX_LANGUAGES = 6
 
