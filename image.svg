@@ -3,15 +3,16 @@
     <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.6"/>
     </filter>
-
-    <linearGradient id="maven-gradle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#C71A36" /> 
-      <stop offset="100%" stop-color="#1DC9B7" /> 
-    </linearGradient>
   </defs>
   <style>
-    .animated-border { stroke-dasharray: 20, 10; animation: dash-flow 2s linear infinite; }
-    @keyframes dash-flow { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
+    .animated-border {
+      stroke-dasharray: 20, 10;
+      animation: dash-flow 2s linear infinite;
+    }
+    @keyframes dash-flow {
+      from { stroke-dashoffset: 30; }
+      to { stroke-dashoffset: 0; }
+    }
   </style>
 
   <g transform="translate(25, 25)">
@@ -77,17 +78,77 @@
   <g transform="translate(25, 210)">
     <rect width="800" height="140" rx="15" ry="15" fill="#171717" stroke="#3ED9C9" stroke-width="3" filter="url(#soft-shadow)" class="animated-border"/>
     <g transform="translate(40, 40)">
-      <rect x="360.0" y="0" width="0" height="12" rx="6" fill="#3572A5">
-        <animate attributeName="width" from="0" to="720" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
-        <animate attributeName="x" from="360.0" to="0" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      <rect x="79.5" y="0" width="0" height="12" rx="6" fill="#b07219">
+        <animate attributeName="width" from="0" to="159" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="79.5" to="0" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
       </rect>
-      <text x="360.0" y="35" fill="#3572A5" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
-        Python
+      <text x="79.5" y="35" fill="#b07219" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        Java
         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze" />
       </text>
-      <text x="360.0" y="55" fill="#3572A5" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
-        100.0%
+      <text x="79.5" y="55" fill="#b07219" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        22.7%
         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze" />
+      </text>
+      <rect x="226.5" y="0" width="0" height="12" rx="6" fill="#f34b7d">
+        <animate attributeName="width" from="0" to="127" dur="0.6s" begin="0.15s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="226.5" to="163" dur="0.6s" begin="0.15s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      </rect>
+      <text x="226.5" y="35" fill="#f34b7d" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        C++
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.44999999999999996s" fill="freeze" />
+      </text>
+      <text x="226.5" y="55" fill="#f34b7d" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        18.2%
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.44999999999999996s" fill="freeze" />
+      </text>
+      <rect x="357.5" y="0" width="0" height="12" rx="6" fill="#3572A5">
+        <animate attributeName="width" from="0" to="127" dur="0.6s" begin="0.3s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="357.5" to="294" dur="0.6s" begin="0.3s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      </rect>
+      <text x="357.5" y="35" fill="#3572A5" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        Python
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze" />
+      </text>
+      <text x="357.5" y="55" fill="#3572A5" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        18.2%
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze" />
+      </text>
+      <rect x="472.5" y="0" width="0" height="12" rx="6" fill="#dea584">
+        <animate attributeName="width" from="0" to="95" dur="0.6s" begin="0.44999999999999996s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="472.5" to="425" dur="0.6s" begin="0.44999999999999996s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      </rect>
+      <text x="472.5" y="35" fill="#dea584" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        Rust
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.75s" fill="freeze" />
+      </text>
+      <text x="472.5" y="55" fill="#dea584" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        13.6%
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.75s" fill="freeze" />
+      </text>
+      <rect x="555.5" y="0" width="0" height="12" rx="6" fill="#6e4a7e">
+        <animate attributeName="width" from="0" to="63" dur="0.6s" begin="0.6s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="555.5" to="524" dur="0.6s" begin="0.6s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      </rect>
+      <text x="555.5" y="35" fill="#6e4a7e" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        Elixir
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8999999999999999s" fill="freeze" />
+      </text>
+      <text x="555.5" y="55" fill="#6e4a7e" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        9.1%
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8999999999999999s" fill="freeze" />
+      </text>
+      <rect x="655.5" y="0" width="0" height="12" rx="6" fill="#8b949e">
+        <animate attributeName="width" from="0" to="129" dur="0.6s" begin="0.75s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="655.5" to="591" dur="0.6s" begin="0.75s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      </rect>
+      <text x="655.5" y="35" fill="#8b949e" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        Others
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.05s" fill="freeze" />
+      </text>
+      <text x="655.5" y="55" fill="#8b949e" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        18.2%
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.05s" fill="freeze" />
       </text>
     </g>
   </g>
