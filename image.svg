@@ -76,5 +76,19 @@
   </g>
   <g transform="translate(25, 210)">
     <rect width="800" height="140" rx="15" ry="15" fill="#171717" stroke="#3ED9C9" stroke-width="3" filter="url(#soft-shadow)" class="animated-border"/>
+    <g transform="translate(40, 40)">
+      <rect x="360.0" y="0" width="0" height="12" rx="6" fill="#3572A5">
+        <animate attributeName="width" from="0" to="720" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+        <animate attributeName="x" from="360.0" to="0" dur="0.6s" begin="0.0s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1" />
+      </rect>
+      <text x="360.0" y="35" fill="#3572A5" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        Python
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze" />
+      </text>
+      <text x="360.0" y="55" fill="#3572A5" font-family="system-ui, sans-serif" font-size="13" font-weight="normal" text-anchor="middle" dominant-baseline="middle" opacity="0">
+        100.0%
+        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze" />
+      </text>
+    </g>
   </g>
 </svg>
