@@ -407,24 +407,32 @@ def main() -> None:
     total_height = current_y
 
     final_svg = f'''<svg width="{total_width}" height="{total_height}" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.6"/>
-    </filter>
-  </defs>
-  <style>
-    .animated-border {{
-      stroke-dasharray: 20, 10;
-      animation: dash-flow 2s linear infinite;
-    }}
-    @keyframes dash-flow {{
-      from {{ stroke-dashoffset: 30; }}
-      to {{ stroke-dashoffset: 0; }}
-    }}
-  </style>
+    <defs>
+        <!-- 1. Gradient defined FIRST to prevent parsing cascades -->
+        <linearGradient id="maven-gradle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#C71A36" /> 
+        <stop offset="100%" stop-color="#1DC9B7" /> 
+        </linearGradient>
 
-{chr(10).join(components)}
-</svg>'''
+        <!-- 2. Shadow rebuilt using universally supported primitives -->
+        <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+        <feOffset dx="0" dy="8" result="offsetBlur"/>
+        <feFlood flood-color="#000000" flood-opacity="0.6" result="shadowColor"/>
+        <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+        <feMerge>
+            <feMergeNode in="shadow"/>
+            <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+        </filter>
+    </defs>
+    <style>
+        .animated-border {{ stroke-dasharray: 20, 10; animation: dash-flow 2s linear infinite; }}
+        @keyframes dash-flow {{ from {{ stroke-dashoffset: 30; }} to {{ stroke-dashoffset: 0; }} }}
+    </style>
+
+    {chr(10).join(components)}
+    </svg>'''
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as file:
         file.write(final_svg)
